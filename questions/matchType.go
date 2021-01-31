@@ -5,11 +5,11 @@ import (
 )
 
 type quizQuestion struct {
-	Manufacturer string
-	Model        string
-	PhotoURL     string
-	PageURL      string
-	TitleRawData string
+	Manufacturer string `json:"manufacturer"`
+	Model        string `json:"model"`
+	PhotoURL     string `json:"photo_url"`
+	PageURL      string `json:"page_url"`
+	TitleRawData string `json:"raw_data"`
 }
 
 func matchAircraftTypes(q *questionData) (quizQuestion, bool) {
@@ -23,7 +23,7 @@ func matchAircraftTypes(q *questionData) (quizQuestion, bool) {
 
 	aircraftModelMap = map[string][]string{
 		"Airbus":     {"A300", "A310", "A318", "A319", "A320", "A321", "A330", "A340", "A350", "A380"},
-		"Boeing":     {"717", "727", "737-1", "737-2", "737-3", "737-4", "737-5", "737-6", "737-7", "737-8", "737-9", "737-8 MAX", "747-1", "747-2", "747SP", "747-3", "747-4", "747-8", "757-2", "757-3", "767-2", "767-3", "767-4", "777-2", "777-3", "787-8", "787-9"},
+		"Boeing":     {"717", "727", "737-1", "737-2", "737-3", "737-4", "737-5", "737-6", "737-7", "737-8", "737-9", "8 MAX", "9 MAX", "10 MAX", "747-1", "747-2", "747SP", "747-3", "747-4", "747-8", "757-2", "757-3", "767-2", "767-3", "767-4", "777-2", "777-3", "787-8", "787-9", "787-10"},
 		"Embraer":    {"E170", "E175", "E190", "E195", "ERJ-145", "EMB-120"},
 		"Antonov":    {"AN-124", "AN-225"},
 		"ATR":        {"ATR-42", "ATR-72"},

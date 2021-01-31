@@ -7,13 +7,12 @@ import (
 	"time"
 )
 
-func PrepareQuestions() []quizQuestion {
+func PrepareQuestions(numberOfQuestions int) []quizQuestion {
 	var returnedQuestions int
 	var questionArray []quizQuestion
 	var question quizQuestion
 	var data questionData
 	var match bool
-	numberOfQuestions := 10
 
 	for returnedQuestions < numberOfQuestions {
 		data = getPhotoInfo(rand.Intn(9223337) + 1)
@@ -23,6 +22,7 @@ func PrepareQuestions() []quizQuestion {
 			returnedQuestions++
 		}
 		// don't ddos jetphotos
+		// TODO: this can be a parameter
 		time.Sleep(time.Second)
 	}
 
