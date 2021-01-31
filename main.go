@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"log"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -13,16 +13,19 @@ func main() {
 	r.GET("/getQuestions/:questionCount", func(c *gin.Context) {
 		count, err := strconv.Atoi(c.Param("questionCount"))
 		if err != nil {
-			fmt.Println("Error parsing string to int")
-			// todo: return something else than 200
+			log.Fatal("Error parsing string to int")
 		}
 
-		// TODO: limit count to sensible numbers
+		if count < 1 && count > 10 {
+			log.Fatal("Wrong number of questions: ", count)
+		}
+
 		q := questions.PrepareQuestions(count)
 
+		log.Println("Fetching %i questions...", count)
 		c.JSON(200, gin.H{
 			"questions": q,
 		})
 	})
-	r.Run("0.0.0.0:4000") // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
+	r.Run()
 }
