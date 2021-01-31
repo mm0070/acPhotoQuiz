@@ -8,13 +8,16 @@ type quizQuestion struct {
 	Manufacturer string
 	Model        string
 	PhotoURL     string
+	PageURL      string
 	TitleRawData string
 }
 
-func matchAircraftTypes(q *questionData) quizQuestion {
+func matchAircraftTypes(q *questionData) (quizQuestion, bool) {
 	var aircraftModelMap map[string][]string
 	var question quizQuestion
+	var foundMatch bool
 
+	question.PageURL = q.PageURL
 	question.PhotoURL = q.PhotoURL
 	question.TitleRawData = q.TitleRawData
 
@@ -31,16 +34,18 @@ func matchAircraftTypes(q *questionData) quizQuestion {
 		"Ilyushin":   {"62"},
 	}
 
-	for k, m := range aircraftModelMap {
+	for k, v := range aircraftModelMap {
 		if strings.Contains(q.AircraftType, k) {
 			question.Manufacturer = k
-			for _, n := range m {
+			for _, n := range v {
 				if strings.Contains(q.AircraftType, n) {
 					question.Model = n
+					foundMatch = true
+					return question, foundMatch
 				}
 			}
 		}
 	}
 
-	return question
+	return question, foundMatch
 }
