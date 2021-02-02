@@ -1,6 +1,12 @@
 version: '3'
 services:
   server:
-    build: .
+    build: ./api
     ports:
-      - "4001:4000"
+      - "4000:4000"
+  quizapp:
+    build: ./quizapp
+    ports:
+      - "80:80"
+    volumes:
+      - './quizapp:/usr/share/nginx/html'
