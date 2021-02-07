@@ -1,7 +1,7 @@
 <template>
   <div>
+    <Loading v-if="questions.length < numberOfQuestions" :questions="questions"></Loading>
     <!-- <Picture v-if="questions.length != 0" :imgSrc="questions[0].photo_url"></Picture> -->
-    <Loading :questions="questions"></Loading>
   </div>
 </template>
 
@@ -20,14 +20,14 @@ export default {
     return {
       questions: [], // array to hold questions returned from the API
       questionCount: 0, // count the number of questions returned while fetching - used for loading page
-      numberOfQuestions: 3, // number of questions to fetch
+      numberOfQuestions: 1, // number of questions to fetch
     }
   },
   methods: {
   },
   mounted() {
     for (this.questionCount = 0; this.questionCount < this.numberOfQuestions; this.questionCount++) {
-      axios.get("http://127.0.0.1:4000/getQuestions/1").then(response => this.questions.push(response.data.questions[0]));
+      axios.get("http://127.0.0.1:4000/getQuestions/test/1").then(response => this.questions.push(response.data.questions[0]));
     }
     }
   }
