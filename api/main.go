@@ -11,6 +11,8 @@ import (
 func main() {
 	r := gin.Default()
 	r.GET("/getQuestions/:questionCount", func(c *gin.Context) {
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+
 		count, err := strconv.Atoi(c.Param("questionCount"))
 		if err != nil {
 			log.Fatal("Error parsing string to int")
@@ -23,6 +25,7 @@ func main() {
 		q := questions.PrepareQuestions(count)
 
 		log.Println("Fetching %i questions...", count)
+
 		c.JSON(200, gin.H{
 			"questions": q,
 		})
