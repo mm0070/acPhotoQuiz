@@ -5,11 +5,23 @@
       :questions="questions"
       :numberOfQuestions="numberOfQuestions"
     ></Loading>
+    <Score 
+      :score="score"
+      :numberOfQuestions="numberOfQuestions"
+      v-if="isActive"
+    ></Score>
     <Picture
       v-if="isActive"
       :imgSrc="questions[currentQuestionIndex].photo_url"
     ></Picture>
-    <Selector v-if="isActive" @submitAnswer="checkAnswer"></Selector>
+    <Selector 
+      v-if="isActive" 
+      @submitAnswer="checkAnswer" 
+      @nextQuestion="nextQuestion"
+      :questionAnswered="questionAnswered"
+      :isAnswerCorrect="isAnswerCorrect"
+      :question="questions[currentQuestionIndex]"
+    ></Selector>
     <Finished v-if="isFinished" :score="score"></Finished>
   </div>
 </template>
@@ -20,6 +32,7 @@ import axios from "axios";
 import Loading from "./components/Loading.vue";
 import Selector from "./components/Selector.vue";
 import Finished from "./components/Finished.vue";
+import Score from './components/Score.vue';
 
 export default {
   name: "App",
@@ -27,7 +40,8 @@ export default {
     Picture,
     Loading,
     Selector,
-    Finished
+    Finished,
+    Score
   },
   data() {
     return {
@@ -35,7 +49,9 @@ export default {
       questionCount: 0, // count the number of questions returned while fetching - used for loading page
       numberOfQuestions: 5, // number of questions to fetch
       currentQuestionIndex: 0, // index of current question
-      score: 0
+      score: 0,
+      isAnswerCorrect: true,
+      questionAnswered: false,
     };
   },
   // fetch questions on page load
@@ -57,21 +73,28 @@ export default {
 
       // check manufacturer
       if (currentQuestion.manufacturer === answerManufacturer) {
-        console.log("manufacturer correct " + answerManufacturer);
         this.score += 20;
+      } else {
+        this.isAnswerCorrect = false;
       }
 
       // check model
       if (currentQuestion.model === answerModel) {
         console.log("model correct " + answerModel);
         this.score += 80;
+      } else {
+        this.isAnswerCorrect = false;
       }
-
-      // progress to next question
+      this.questionAnswered = true;
+    },
+    // progress to next question
+    nextQuestion() {
       if (this.currentQuestionIndex != this.numberOfQuestions) {
+        this.isAnswerCorrect = true;
         this.currentQuestionIndex++;
+        this.questionAnswered = false;
       }
-    }
+    },
   },
   computed: {
     isLoading() {

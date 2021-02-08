@@ -3,15 +3,15 @@
     <select class="form-select" v-model="manufacturerSelect">
       <option selected>Manufacturer</option>
       <option>Airbus</option>
-      <option>Boeing</option>
-      <option>Embraer</option>
       <option>Antonov</option>
       <option>ATR</option>
+      <option>Boeing</option>
       <option>Bombardier</option>
       <option>Cessna</option>
+      <option>Embraer</option>
       <option>Fokker</option>
-      <option>Tupolev</option>
       <option>Ilyushin</option>
+      <option>Tupolev</option>
     </select>
     <select class="form-select" v-model="modelList">
       <option
@@ -21,9 +21,14 @@
         >{{ option.text }}</option
       >
     </select>
-    <button type="button" class="btn btn-success" @click="submitAnswer">
-      Next
+    <h3 v-if="!isAnswerCorrect">Correct answer: {{ question.manufacturer }} {{question.model}}</h3>
+    <button v-if="!questionAnswered" type="button" class="btn btn-primary" @click="submitAnswer">
+      Check answer
     </button>
+    <button v-if="questionAnswered" type="button" class="btn btn-success" @click="nextQuestion">
+      Next question
+    </button>
+    
   </div>
 </template>
 
@@ -36,10 +41,17 @@ export default {
       modelList: undefined
     };
   },
+  props: ['questionAnswered', 
+    'isAnswerCorrect',
+    'question'],
   methods: {
     submitAnswer() {
       this.$emit("submitAnswer", this.manufacturerSelect, this.modelList);
+    },
+    nextQuestion() {
+        this.$emit("nextQuestion")
     }
+
   },
   computed: {
     setOptions() {
@@ -77,7 +89,7 @@ export default {
           { val: "747SP", text: "747SP" },
           { val: "747-3", text: "747-300" },
           { val: "747-4", text: "747-400" },
-          { val: "747-8", text: "747-800" },
+          { val: "747-8", text: "747-8" },
           { val: "757-2", text: "757-200" },
           { val: "757-3", text: "757-300" },
           { val: "767-2", text: "767-200" },
