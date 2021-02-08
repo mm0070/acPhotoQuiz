@@ -63,7 +63,7 @@ export default {
     return {
       questions: [], // array to hold questions returned from the API
       questionCount: 0, // count the number of questions returned while fetching - used for loading page
-      numberOfQuestions: 5, // number of questions to fetch
+      numberOfQuestions: 10, // number of questions to fetch
       currentQuestionIndex: 0, // index of current question
       score: 0,
       isAnswerCorrect: true,
@@ -78,7 +78,7 @@ export default {
       this.questionCount++
     ) {
       axios
-        .get("http://127.0.0.1:4000/getQuestions/test/1")
+        .get("http://localhost:4000/getQuestions/fetch/1")
         .then((response) => this.questions.push(response.data.questions[0]));
     }
   },
@@ -131,14 +131,3 @@ export default {
   },
 };
 </script>
-
-<style>
-/* #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-} */
-</style>

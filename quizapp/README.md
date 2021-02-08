@@ -1,4 +1,4 @@
-# quizapp
+# Vue frontend
 
 ## Project setup
 

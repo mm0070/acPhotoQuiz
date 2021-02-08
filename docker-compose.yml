@@ -4,9 +4,10 @@ services:
     build: ./api
     ports:
       - "4000:4000"
-  # quizapp:
-  #   build: ./quizapp
-  #   ports:
-  #     - "80:80"
-  #   volumes:
-  #     - './quizapp:/usr/share/nginx/html'
+  quizapp:
+    build: ./quizapp
+    ports:
+      - "8080:8080"
+    volumes:
+      - './quizapp:/app'
+      - '/app/node_modules'

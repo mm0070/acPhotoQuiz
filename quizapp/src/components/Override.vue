@@ -1,7 +1,7 @@
 <template>
   <div class="fixed">
     <button
-      v-if="!overrideTriggered"
+      v-if="overrideAvailable && !overrideTriggered"
       @click="showDetails"
       type="button"
       class="btn btn-warning"
@@ -9,7 +9,7 @@
       Override
     </button>
     <button
-      v-if="overrideTriggered"
+      v-if="overrideAvailable && overrideTriggered"
       @click="override"
       type="button"
       class="btn btn-danger"
@@ -27,6 +27,11 @@ export default {
     return {
       overrideTriggered: false,
     };
+  },
+  computed: {
+    overrideAvailable() {
+      return this.questionAnswered && !this.isAnswerCorrect;
+    },
   },
   methods: {
     override() {
