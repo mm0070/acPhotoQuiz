@@ -1,8 +1,9 @@
 <template>
   <div>
-    <Loading v-if="questions.length < numberOfQuestions" :questions="questions"></Loading>
-    <Picture v-if="questions.length == numberOfQuestions" :imgSrc="questions[currentQuestion].photo_url"></Picture>
-    <Selector></Selector>
+    <Loading v-if="questions.length < numberOfQuestions" :questions="questions" :numberOfQuestions="numberOfQuestions"></Loading>
+    <Picture v-if="questions.length == numberOfQuestions && currentQuestionIndex != numberOfQuestions" :imgSrc="questions[currentQuestionIndex].photo_url"></Picture>
+    <Selector v-if="questions.length == numberOfQuestions && currentQuestionIndex != numberOfQuestions" @submitAnswer="checkAnswer"></Selector>
+    <Finished v-if="currentQuestionIndex === numberOfQuestions" :score="score"></Finished>
   </div>
 </template>
 
@@ -11,30 +12,52 @@ import Picture from './components/Picture.vue'
 import axios from 'axios';
 import Loading from './components/Loading.vue';
 import Selector from './components/Selector.vue';
+import Finished from './components/Finished.vue';
 
 export default {
   name: 'App',
   components: {
     Picture,
     Loading,
-    Selector
+    Selector,
+    Finished
   },
   data() {
     return {
       questions: [], // array to hold questions returned from the API
       questionCount: 0, // count the number of questions returned while fetching - used for loading page
-      numberOfQuestions: 2, // number of questions to fetch
-      currentQuestion: 0,
+      numberOfQuestions: 5, // number of questions to fetch
+      currentQuestionIndex: 0, // index of current question
+      score: 0
     }
   },
+  // fetch questions on page load
   mounted() {
     for (this.questionCount = 0; this.questionCount < this.numberOfQuestions; this.questionCount++) {
-      axios.get("http://127.0.0.1:4000/getQuestions/test/1").then(response => this.questions.push(response.data.questions[0]));
+      axios.get("http://127.0.0.1:4000/getQuestions/fetch/1").then(response => this.questions.push(response.data.questions[0]));
     }
   },
   methods: {
-    nextQuestion() {
+    checkAnswer(answerManufacturer, answerModel) {
+      // assign current question to new local variable
+      var currentQuestion = this.questions[this.currentQuestionIndex];
 
+      // check manufacturer
+      if (currentQuestion.manufacturer === answerManufacturer) {
+        console.log("manufacturer correct " + answerManufacturer);
+        this.score += 20;
+      }
+
+      // check model
+      if (currentQuestion.model === answerModel) {
+        console.log("model correct " + answerModel);
+        this.score += 80;
+      }
+
+      // progress to next question
+      if (this.currentQuestionIndex != this.numberOfQuestions) {
+        this.currentQuestionIndex++
+      } 
     }
   } 
 }

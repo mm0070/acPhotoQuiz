@@ -16,7 +16,7 @@
         <select class="form-select" v-model="modelList">
             <option v-for="option in setOptions" :value="option.val" :key="option.val">{{ option.text }}</option>
         </select>
-        <button type="button" class="btn btn-success">Next</button>
+        <button type="button" class="btn btn-success" @click="submitAnswer">Next</button>
     </div>
 </template>
 
@@ -27,6 +27,11 @@ export default {
         return {
             manufacturerSelect: undefined,
             modelList: undefined,
+        }
+    },
+    methods: {
+        submitAnswer() {
+            this.$emit('submitAnswer', this.manufacturerSelect, this.modelList)
         }
     },
     computed: {

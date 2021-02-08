@@ -1,13 +1,13 @@
 <template>
     <div>
-        <p>Loading questions: {{ loadingProgress }}/3</p>
+        <p>Loading questions: {{ loadingProgress }}/{{ numberOfQuestions }}</p>
     </div>
 </template>
 
 <script>
 export default {
     name: 'Loading',
-    props: ['questions'],
+    props: ['questions', 'numberOfQuestions'],
     computed: {
         loadingProgress() {
             if (this.questions == undefined) {
