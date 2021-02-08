@@ -5,6 +5,6 @@
 <script>
 export default {
   name: "Finished",
-  props: ["score"]
+  props: ["score"],
 };
 </script>

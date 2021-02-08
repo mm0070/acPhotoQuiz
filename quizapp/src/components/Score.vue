@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>Score: {{ score }}/{{ numberOfQuestions*100 }}</p>
+    <p>Score: {{ score }}/{{ numberOfQuestions * 100 }}</p>
   </div>
 </template>
 

@@ -18,17 +18,29 @@
         v-for="option in setOptions"
         :value="option.val"
         :key="option.val"
-        >{{ option.text }}</option
       >
+        {{ option.text }}
+      </option>
     </select>
-    <h3 v-if="!isAnswerCorrect">Correct answer: {{ question.manufacturer }} {{question.model}}</h3>
-    <button v-if="!questionAnswered" type="button" class="btn btn-primary" @click="submitAnswer">
+    <h3 v-if="!isAnswerCorrect">
+      Correct answer: {{ question.manufacturer }} {{ question.model }}
+    </h3>
+    <button
+      v-if="!questionAnswered"
+      type="button"
+      class="btn btn-primary"
+      @click="submitAnswer"
+    >
       Check answer
     </button>
-    <button v-if="questionAnswered" type="button" class="btn btn-success" @click="nextQuestion">
+    <button
+      v-if="questionAnswered"
+      type="button"
+      class="btn btn-success"
+      @click="nextQuestion"
+    >
       Next question
     </button>
-    
   </div>
 </template>
 
@@ -38,20 +50,17 @@ export default {
   data() {
     return {
       manufacturerSelect: undefined,
-      modelList: undefined
+      modelList: undefined,
     };
   },
-  props: ['questionAnswered', 
-    'isAnswerCorrect',
-    'question'],
+  props: ["questionAnswered", "isAnswerCorrect", "question"],
   methods: {
     submitAnswer() {
       this.$emit("submitAnswer", this.manufacturerSelect, this.modelList);
     },
     nextQuestion() {
-        this.$emit("nextQuestion")
-    }
-
+      this.$emit("nextQuestion");
+    },
   },
   computed: {
     setOptions() {
@@ -66,7 +75,7 @@ export default {
           { val: "A330", text: "A330" },
           { val: "A340", text: "A340" },
           { val: "A350", text: "A350" },
-          { val: "A380", text: "A380" }
+          { val: "A380", text: "A380" },
         ];
       } else if (this.manufacturerSelect === "Boeing") {
         modelList = [
@@ -99,7 +108,7 @@ export default {
           { val: "777-3", text: "777-300" },
           { val: "787-8", text: "787-8" },
           { val: "787-9", text: "787-9" },
-          { val: "787-10", text: "787-10" }
+          { val: "787-10", text: "787-10" },
         ];
       } else if (this.manufacturerSelect === "Embraer") {
         modelList = [
@@ -108,17 +117,17 @@ export default {
           { val: "E190", text: "E190" },
           { val: "E195", text: "E195" },
           { val: "ERJ-145", text: "ERJ-145" },
-          { val: "EMB-120", text: "EMB-120" }
+          { val: "EMB-120", text: "EMB-120" },
         ];
       } else if (this.manufacturerSelect === "Antonov") {
         modelList = [
           { val: "AN-124", text: "AN-124" },
-          { val: "AN-225", text: "AN-225" }
+          { val: "AN-225", text: "AN-225" },
         ];
       } else if (this.manufacturerSelect === "ATR") {
         modelList = [
           { val: "ATR-42", text: "ATR-42" },
-          { val: "ATR-72", text: "ATR-72" }
+          { val: "ATR-72", text: "ATR-72" },
         ];
       } else if (this.manufacturerSelect === "Bombardier") {
         modelList = [
@@ -126,20 +135,20 @@ export default {
           { val: "CRJ-200", text: "CRJ-200" },
           { val: "CRJ-900", text: "CRJ-900" },
           { val: "CRJ-700", text: "CRJ-700" },
-          { val: "Global", text: "Global" }
+          { val: "Global", text: "Global" },
         ];
       } else if (this.manufacturerSelect === "Cessna") {
         modelList = [
           { val: "152", text: "152" },
           { val: "172", text: "172" },
           { val: "182", text: "182" },
-          { val: "Citation", text: "Citation" }
+          { val: "Citation", text: "Citation" },
         ];
       } else if (this.manufacturerSelect === "Fokker") {
         modelList = [
           { val: "50", text: "50" },
           { val: "70", text: "70" },
-          { val: "100", text: "100" }
+          { val: "100", text: "100" },
         ];
       } else if (this.manufacturerSelect === "Tupolev") {
         modelList = [{ val: "134", text: "Tu-134" }];
@@ -147,8 +156,8 @@ export default {
         modelList = [{ val: "62", text: "Il-62" }];
       }
       return modelList;
-    }
-  }
+    },
+  },
 };
 </script>
 

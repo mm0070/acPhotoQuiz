@@ -5,7 +5,7 @@
       :questions="questions"
       :numberOfQuestions="numberOfQuestions"
     ></Loading>
-    <Score 
+    <Score
       :score="score"
       :numberOfQuestions="numberOfQuestions"
       v-if="isActive"
@@ -14,9 +14,9 @@
       v-if="isActive"
       :imgSrc="questions[currentQuestionIndex].photo_url"
     ></Picture>
-    <Selector 
-      v-if="isActive" 
-      @submitAnswer="checkAnswer" 
+    <Selector
+      v-if="isActive"
+      @submitAnswer="checkAnswer"
       @nextQuestion="nextQuestion"
       :questionAnswered="questionAnswered"
       :isAnswerCorrect="isAnswerCorrect"
@@ -32,7 +32,7 @@ import axios from "axios";
 import Loading from "./components/Loading.vue";
 import Selector from "./components/Selector.vue";
 import Finished from "./components/Finished.vue";
-import Score from './components/Score.vue';
+import Score from "./components/Score.vue";
 
 export default {
   name: "App",
@@ -41,7 +41,7 @@ export default {
     Loading,
     Selector,
     Finished,
-    Score
+    Score,
   },
   data() {
     return {
@@ -63,7 +63,7 @@ export default {
     ) {
       axios
         .get("http://127.0.0.1:4000/getQuestions/test/1")
-        .then(response => this.questions.push(response.data.questions[0]));
+        .then((response) => this.questions.push(response.data.questions[0]));
     }
   },
   methods: {
@@ -108,8 +108,8 @@ export default {
     },
     isFinished() {
       return this.currentQuestionIndex === this.numberOfQuestions;
-    }
-  }
+    },
+  },
 };
 </script>
 
