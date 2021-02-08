@@ -1,45 +1,68 @@
 <template>
   <div>
-    <select class="form-select" v-model="manufacturerSelect">
-      <option>Airbus</option>
-      <option>Antonov</option>
-      <option>ATR</option>
-      <option>Boeing</option>
-      <option>Bombardier</option>
-      <option>Cessna</option>
-      <option>Embraer</option>
-      <option>Fokker</option>
-      <option>Ilyushin</option>
-      <option>Tupolev</option>
-    </select>
-    <select class="form-select" v-model="modelList">
-      <option
-        v-for="option in setOptions"
-        :value="option.val"
-        :key="option.val"
+    <div v-if="!questionAnswered" class="row justify-content-md-center">
+      <div class="col-3 select-boxes">
+        <h5>Manufacturer:</h5>
+        <select class="form-select" v-model="manufacturerSelect">
+          <option>Airbus</option>
+          <option>Antonov</option>
+          <option>ATR</option>
+          <option>Boeing</option>
+          <option>Bombardier</option>
+          <option>Cessna</option>
+          <option>Embraer</option>
+          <option>Fokker</option>
+          <option>Ilyushin</option>
+          <option>Tupolev</option>
+        </select>
+      </div>
+      <div class="col-3 select-boxes">
+        <h5>Model:</h5>
+        <select class="form-select" v-model="modelList">
+          <option
+            v-for="option in setOptions"
+            :value="option.val"
+            :key="option.val"
+          >
+            {{ option.text }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="row justify-content-md-center">
+      <div
+        v-if="!isAnswerCorrect"
+        class="alert alert-danger col-6"
+        role="alert"
       >
-        {{ option.text }}
-      </option>
-    </select>
-    <h3 v-if="!isAnswerCorrect">
-      Correct answer: {{ question.manufacturer }} {{ question.model }}
-    </h3>
-    <button
-      v-if="!questionAnswered"
-      type="button"
-      class="btn btn-primary"
-      @click="submitAnswer"
-    >
-      Check answer
-    </button>
-    <button
-      v-if="questionAnswered"
-      type="button"
-      class="btn btn-success"
-      @click="nextQuestion"
-    >
-      Next question
-    </button>
+        Wrong. Correct answer: {{ question.manufacturer }} {{ question.model }}
+      </div>
+      <div
+        v-if="isAnswerCorrect && questionAnswered"
+        class="alert alert-success col-6"
+        role="alert"
+      >
+        Correct!
+      </div>
+    </div>
+    <div class="row justify-content-md-center">
+      <button
+        v-if="!questionAnswered"
+        type="button"
+        class="btn btn-primary col-6"
+        @click="submitAnswer"
+      >
+        Check answer
+      </button>
+      <button
+        v-if="questionAnswered"
+        type="button"
+        class="btn btn-success col-6"
+        @click="nextQuestion"
+      >
+        Next question
+      </button>
+    </div>
   </div>
 </template>
 
@@ -58,6 +81,8 @@ export default {
       this.$emit("submitAnswer", this.manufacturerSelect, this.modelList);
     },
     nextQuestion() {
+      this.manufacturerSelect = null;
+      this.modelList = null;
       this.$emit("nextQuestion");
     },
   },
@@ -160,4 +185,9 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.select-boxes {
+  margin-top: 2vh;
+  margin-bottom: 2vh;
+}
+</style>

@@ -26,7 +26,9 @@ func main() {
 		// dev mode to get sample data quickly without waiting
 		if c.Param("mode") == "test" {
 			time.Sleep(time.Millisecond * 500) // add some fake delay
-			jsonData := []byte(`{"questions":[{"manufacturer":"Airbus","model":"A319","photo_url":"https://cdn.jetphotos.com/full/3/50089_1319225745.jpg","page_url":"https://www.jetphotos.com/photo/7230902","raw_data":"OK-MEL | Airbus A319-112 | CSA Czech Airlines | Alessandro Lukas | JetPhotos"}]}`)
+			jsonData := []byte(`{"questions":[{"manufacturer":"Airbus","model":"A319","photo_url":"https://cdn.jetphotos.com/full/5/98644_1531154853.jpg","page_url":"https://www.jetphotos.com/photo/7230902","raw_data":"OK-MEL | Airbus A319-112 | CSA Czech Airlines | Alessandro Lukas | JetPhotos"}]}`)
+
+			// jsonData := []byte(`{"questions":[{"manufacturer":"Airbus","model":"A319","photo_url":"https://cdn.jetphotos.com/full/3/50089_1319225745.jpg","page_url":"https://www.jetphotos.com/photo/7230902","raw_data":"OK-MEL | Airbus A319-112 | CSA Czech Airlines | Alessandro Lukas | JetPhotos"}]}`)
 			c.Data(200, "application/json", jsonData)
 		}
 

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <Loading
       v-if="isLoading"
       :questions="questions"
@@ -22,6 +22,18 @@
       :isAnswerCorrect="isAnswerCorrect"
       :question="questions[currentQuestionIndex]"
     ></Selector>
+    <Override
+      v-if="isActive"
+      @overrideScore="overrideScore"
+      :question="questions[currentQuestionIndex]"
+      :questionAnswered="questionAnswered"
+      :isAnswerCorrect="isAnswerCorrect"
+    ></Override>
+    <QuestionIndicator
+      v-if="isActive"
+      :currentQuestionIndex="currentQuestionIndex"
+      :numberOfQuestions="numberOfQuestions"
+    ></QuestionIndicator>
     <Finished v-if="isFinished" :score="score"></Finished>
   </div>
 </template>
@@ -33,6 +45,8 @@ import Loading from "./components/Loading.vue";
 import Selector from "./components/Selector.vue";
 import Finished from "./components/Finished.vue";
 import Score from "./components/Score.vue";
+import Override from "./components/Override.vue";
+import QuestionIndicator from "./components/QuestionIndicator.vue";
 
 export default {
   name: "App",
@@ -42,6 +56,8 @@ export default {
     Selector,
     Finished,
     Score,
+    Override,
+    QuestionIndicator,
   },
   data() {
     return {
@@ -95,6 +111,9 @@ export default {
         this.questionAnswered = false;
       }
     },
+    overrideScore() {
+      this.score += 100;
+    },
   },
   computed: {
     isLoading() {
@@ -114,12 +133,12 @@ export default {
 </script>
 
 <style>
-#app {
+/* #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
-}
+} */
 </style>
