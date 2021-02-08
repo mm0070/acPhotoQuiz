@@ -15,6 +15,7 @@ func PrepareQuestions(numberOfQuestions int) []quizQuestion {
 	var match bool
 
 	for returnedQuestions < numberOfQuestions {
+		// TODO: seed the number generator
 		data = getPhotoInfo(rand.Intn(9223337) + 1)
 		question, match = matchAircraftTypes(&data)
 		if match == true {
@@ -23,7 +24,7 @@ func PrepareQuestions(numberOfQuestions int) []quizQuestion {
 		}
 		// don't ddos jetphotos
 		// TODO: this can be a parameter
-		time.Sleep(time.Second)
+		time.Sleep(time.Millisecond * 200)
 	}
 
 	// debug lines
