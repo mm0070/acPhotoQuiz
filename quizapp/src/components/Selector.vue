@@ -1,7 +1,6 @@
 <template>
   <div>
     <select class="form-select" v-model="manufacturerSelect">
-      <option selected>Manufacturer</option>
       <option>Airbus</option>
       <option>Antonov</option>
       <option>ATR</option>
